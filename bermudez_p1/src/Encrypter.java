@@ -17,7 +17,10 @@ public class Encrypter {
         parseint:   int x =Integer.parseInt("9");
          */
         ConvertToIntThenPassToIntArray(input);
-        Add7ToEachDigit(digits);
+        Add7ToEachDigit();
+        Mod10();
+        SwapDigits();
+        ReturnAsString();
         return "99999999999999999999999999999999";
     }
 
@@ -27,17 +30,37 @@ public class Encrypter {
         }
     }
 
-    //Used to make testing easier
-    public void PrintArray(int [] array){
-        for (int j : array) {
-            System.out.print(j);
-        }
-        System.out.println();
-    }
-
-    public void Add7ToEachDigit(int [] digits){
+    public void Add7ToEachDigit(){
         for (int i = 0 ; i<digits.length ; i++) {
             digits[i] = digits[i]+7;
         }
+    }
+
+    public void Mod10(){
+        for (int i = 0 ; i<digits.length ; i++) {
+            digits[i] = digits[i]%10;
+        }
+    }
+
+    public void SwapDigits(){
+        //Swaps the first digit with the third.
+        int tempfirstdigit = digits[0];
+        digits[0]=digits[2];
+        digits[2]=tempfirstdigit;
+
+        //Swaps the second digit with the fourth.
+        int tempseconddigit = digits[1];
+        digits[1]=digits[3];
+        digits[3]=tempseconddigit;
+    }
+
+    public String ReturnAsString(){
+        String output = "";
+        for (int j : digits){
+            output+=j;
+        }
+        //REMOVE FOLLOWING LINE AFTER CHECKING THIS WORKS
+        System.out.println(output);
+        return output;
     }
 }
