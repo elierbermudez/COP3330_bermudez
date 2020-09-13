@@ -12,16 +12,16 @@ public class Encrypter {
 
     public String encrypt(String input){
         /*
-        Useful functions:
-        Substring:  String substring(int beginIndex, int endIndex)
-        parseint:   int x =Integer.parseInt("9");
+        1. Replaces each digit with the result of adding 7 to the digit and getting the remainder after dividing the new value by 10.
+        2. Swaps the first digit with the third, and swaps the second digit with the fourth.
+        3. Returns the encrypted integer as a String.
          */
         ConvertToIntThenPassToIntArray(input);
         Add7ToEachDigit();
         Mod10();
         SwapDigits();
-        ReturnAsString();
-        return "99999999999999999999999999999999";
+        String answer = ReturnAsString();
+        return answer;
     }
 
     public void ConvertToIntThenPassToIntArray(String input){
@@ -59,8 +59,6 @@ public class Encrypter {
         for (int j : digits){
             output+=j;
         }
-        //REMOVE FOLLOWING LINE AFTER CHECKING THIS WORKS
-        System.out.println(output);
         return output;
     }
 }
