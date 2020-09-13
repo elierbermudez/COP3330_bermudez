@@ -17,10 +17,11 @@ public class Encrypter {
         parseint:   int x =Integer.parseInt("9");
          */
         ConvertToIntThenPassToIntArray(input);
+        Add7ToEachDigit(digits);
         return "99999999999999999999999999999999";
     }
 
-    private void ConvertToIntThenPassToIntArray(String input){
+    public void ConvertToIntThenPassToIntArray(String input){
         for(int i = 0; i<input.length(); i++){
             digits[i]=Integer.parseInt(input.substring(i,i+1));
         }
@@ -32,5 +33,11 @@ public class Encrypter {
             System.out.print(j);
         }
         System.out.println();
+    }
+
+    public void Add7ToEachDigit(int [] digits){
+        for (int i = 0 ; i<digits.length ; i++) {
+            digits[i] = digits[i]+7;
+        }
     }
 }

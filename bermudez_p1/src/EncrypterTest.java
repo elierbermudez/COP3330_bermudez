@@ -10,8 +10,16 @@ class EncrypterTest {
     @Test
     void testConvertToIntThenPassToIntArray(){
         Encrypter e = new Encrypter();
-        e.encrypt("0579");
+        e.ConvertToIntThenPassToIntArray("0579");
         assertArrayEquals(new int[] {0, 5, 7, 9}, e.digits);
+    }
+
+    @Test
+    void testAdd7ToEachDigit(){
+        Encrypter e = new Encrypter();
+        e.ConvertToIntThenPassToIntArray("0579");
+        e.Add7ToEachDigit(e.digits);
+        assertArrayEquals(new int[] {7, 12, 14, 16}, e.digits);
     }
 
     @Test
