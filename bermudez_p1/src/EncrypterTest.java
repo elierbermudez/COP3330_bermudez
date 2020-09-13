@@ -69,4 +69,22 @@ class EncrypterTest {
         Encrypter e = new Encrypter();
         assertEquals("4523", e.encrypt("5678"));
     }
+
+    @Test
+    void testEncrypt4753to2014() {
+        Encrypter e = new Encrypter();
+        assertEquals("2014", e.encrypt("4753"));
+    }
+
+    @Test
+    void testEncrypt0630to0773() {
+        Encrypter e = new Encrypter();
+        assertEquals("0773", e.encrypt("0630"));
+    }
+
+    @Test
+    void testEncrypt3453to2001() {
+        Encrypter e = new Encrypter();
+        assertEquals("2001", e.encrypt("3453"));
+    }
 }
