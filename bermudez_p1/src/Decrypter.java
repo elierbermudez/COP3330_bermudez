@@ -18,6 +18,17 @@ public class Decrypter {
         return answer;
         All of this code was for the original encrypt class not the decrypt class
         */
+        /*
+        1. Swaps the first digit with the third, and swaps the second digit with the fourth. (Swapping a 2nd time is the same as undoing a swap)
+        2. Add 10, subtract 7, then mod 10 to reverse the add 7 mod 10 process (Same as just adding 3 then mod10)
+        3. Return the encrypted integer as a String
+         */
+        ConvertToIntThenPassToIntArray(input);
+        SwapDigits();
+        Add3ToEachDigit();
+        Mod10();
+        String answer = ReturnAsString();
+        return answer;
     }
 
     public void ConvertToIntThenPassToIntArray(String input){
@@ -26,9 +37,9 @@ public class Decrypter {
         }
     }
 
-    public void Subtract7FromEachDigit(){
+    public void Add3ToEachDigit(){
         for (int i = 0 ; i<digits.length ; i++) {
-            digits[i] = digits[i]-7;
+            digits[i] = digits[i]+3;
         }
     }
 
