@@ -39,15 +39,15 @@ public class Decrypter {
     }
 
     public void SwapDigits(){
-        //Swaps the first digit with the third.
-        int tempfirstdigit = digits[0];
-        digits[0]=digits[2];
-        digits[2]=tempfirstdigit;
+        //Swaps the third digit with the first.
+        int tempthirddigit = digits[2];
+        digits[2]=digits[0];
+        digits[0]=tempthirddigit;
 
         //Swaps the second digit with the fourth.
-        int tempseconddigit = digits[1];
-        digits[1]=digits[3];
-        digits[3]=tempseconddigit;
+        int tempfourthdigit = digits[3];
+        digits[3]=digits[1];
+        digits[1]=tempfourthdigit;
     }
 
     public String ReturnAsString(){
