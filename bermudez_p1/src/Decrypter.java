@@ -26,9 +26,9 @@ public class Decrypter {
         }
     }
 
-    public void Add7ToEachDigit(){
+    public void Subtract7FromEachDigit(){
         for (int i = 0 ; i<digits.length ; i++) {
-            digits[i] = digits[i]+7;
+            digits[i] = digits[i]-7;
         }
     }
 
