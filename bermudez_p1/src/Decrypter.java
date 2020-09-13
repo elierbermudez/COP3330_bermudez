@@ -7,21 +7,9 @@ public class Decrypter {
 
     public String decrypt(String input){
         /*
-        1. Replaces each digit with the result of adding 7 to the digit and getting the remainder after dividing the new value by 10.
-        2. Swaps the first digit with the third, and swaps the second digit with the fourth.
-        3. Returns the encrypted integer as a String.
-        ConvertToIntThenPassToIntArray(input);
-        Add7ToEachDigit();
-        Mod10();
-        SwapDigits();
-        String answer = ReturnAsString();
-        return answer;
-        All of this code was for the original encrypt class not the decrypt class
-        */
-        /*
         1. Swaps the first digit with the third, and swaps the second digit with the fourth. (Swapping a 2nd time is the same as undoing a swap)
         2. Add 10, subtract 7, then mod 10 to reverse the add 7 mod 10 process (Same as just adding 3 then mod10)
-        3. Return the encrypted integer as a String
+        3. Return the decrypted integer as a String
          */
         ConvertToIntThenPassToIntArray(input);
         SwapDigits();
