@@ -1,8 +1,10 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+//import org.junit.jupiter.api.Test;
+//import static org.junit.jupiter.api.Assertions.*;
 
 class BodyMassIndexTest {
     //Imported some tests from previous homework to make sure the syntax is correct when creating new tests myself
+    //`BodyMassIndexTest` contains at least one test for each of the possible BMI categories
+    /* Old Tests
     @Test
     void testDefaultConstructor(){
         Encrypter e = new Encrypter();
@@ -20,4 +22,5 @@ class BodyMassIndexTest {
         Encrypter e = new Encrypter();
         assertEquals("0189", e.encrypt("1234"));
     }
+     */
 }
