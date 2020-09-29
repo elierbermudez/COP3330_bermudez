@@ -4,6 +4,9 @@ public class BodyMassIndex {
     double BMI_Score;
     String BMI_Category;
 
+    public BodyMassIndex(){
+        //Empty Constructor
+    }
     public BodyMassIndex(double input_height, double input_weight) {
         height=input_height;
         weight=input_weight;

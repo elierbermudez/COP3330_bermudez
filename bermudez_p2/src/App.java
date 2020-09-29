@@ -7,12 +7,12 @@ public class App {
         //The method `moreInput` prompts the user to enter "Y" or "N" and
         // returns an appropriate boolean value based on their input.
         Scanner scan = new Scanner(System.in);
-        System.out.println("Would you like to enter more input? Type Y for yes and N for no.");
+        System.out.println("Would you like to enter more input? Type Y for yes or N for no.");
         String letter = scan.nextLine();
 
         //This loop repeats until the user inputs Y or N.
         while(letter.equals("Y") == letter.equals("N")){
-                System.out.println("I didn't quite catch that. Please type Y for yes and N for no.");
+                System.out.println("I didn't quite catch that. Please type Y for yes or N for no.");
                 letter = scan.nextLine();
         }
         return letter.equals("Y");
