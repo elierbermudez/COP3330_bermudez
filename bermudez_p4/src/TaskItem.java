@@ -11,13 +11,22 @@ public class TaskItem {
     public TaskItem() {
     } //Empty Constructor
 
-    public TaskItem(String inputTitle, String inputDescription, String inputDueDate) {
-        checkAndReadInTitle(inputTitle);
-        checkAndReadInDescription(inputDescription);
-        checkAndReadInDueDate(inputDueDate);
+    public TaskItem(String inputDueDate, String inputTitle, String inputDescription) {
+        setDueDate(inputDueDate);
+        setTitle(inputTitle);
+        setDescription(inputDescription);
     }
 
-    private void checkAndReadInTitle(String inputTitle) {
+    public void setDueDate(String inputDueDate) {
+        //A due date shall be in the format of YYYY-MM-DD
+        try {
+            this.dueDate = LocalDate.parse(inputDueDate);
+        } catch (DateTimeParseException ex) {
+            throw new IllegalArgumentException("Due dates should be in YYYY-MM-DD format");
+        }
+    }
+
+    public void setTitle(String inputTitle) {
         //A title shall be 1 or more characters in length
         if (inputTitle.length() > 0) {
             this.title = inputTitle;
@@ -26,18 +35,13 @@ public class TaskItem {
         }
     }
 
-    private void checkAndReadInDescription(String inputDescription) {
+    public void setDescription(String inputDescription) {
         //A description shall be 0 or more characters in length
         this.description = inputDescription;
     }
 
-    private void checkAndReadInDueDate(String inputDueDate) {
-        //A due date shall be in the format of YYYY-MM-DD
-        try {
-            this.dueDate = LocalDate.parse(inputDueDate);
-        } catch (DateTimeParseException ex) {
-            throw new IllegalArgumentException("Due dates should be in YYYY-MM-DD format");
-        }
+    public String getDueDate() {
+        return this.dueDate.toString();
     }
 
     public String getTitle() {
@@ -48,7 +52,4 @@ public class TaskItem {
         return this.description;
     }
 
-    public String getDueDate() {
-        return this.dueDate.toString();
-    }
 }
