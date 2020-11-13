@@ -18,4 +18,9 @@ public class TaskItem {
     invalid titles, invalid due dates (TaskItem's responsibility)
      */
 
+    /*
+    Figure out how this works and use it to handle dates.
+    https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html
+     */
+
 }

@@ -20,6 +20,19 @@ public class App {
     None of these expected errors should crash the program.
      */
 
+    /*
+    Use google or the textbook to find out how to deal with files. Save this step for last as it's kind of self-isolated in a way
+     */
+
+    /*
+    Recommendation: Start with writing out your program in pseudocode. Maybe write
+    some of your tests while doing so, by writing those tests as if your classes
+    and functions existed, then go code the classes you need. After that, maybe
+    start your coding by working on the TaskItem class. Then worry about creating
+    a list of those items. Then worry about the application class and actually
+    interacting with the user.
+     */
+
     public static void main(String[] args) {
         System.out.println("hello world");
     }
