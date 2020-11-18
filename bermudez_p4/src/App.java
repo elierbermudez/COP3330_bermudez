@@ -84,7 +84,7 @@ public class App {
 
         //Reads in "title 1 with spaces: " then shortens it to "title 1 with spaces"
         String title = fileInput.next();
-        title.substring(0, title.length() - 2);
+        title = title.substring(0, title.length() - 2);
 
         //Reads in "description 1 with spaces"
         String description = fileInput.next();
