@@ -1,5 +1,4 @@
 import java.util.Scanner;
-//Formatter things from the book
 import java.io.FileNotFoundException;
 import java.lang.SecurityException;
 import java.util.Formatter;
@@ -7,24 +6,10 @@ import java.util.FormatterClosedException;
 import java.util.NoSuchElementException;
 import java.io.IOException;
 import java.lang.IllegalStateException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class App {
     private static Scanner scan;
-
-    /*
-    You must handle input errors, including:
-    trying to access a task that doesn't exist (App's responsibility? ----
-    ---Happens when choosing a task, for example choosing task 5 when there are only 2 tasks). if(index>size), dont let it happen.
-    You must also handle the case when there are no tasks to edit, remove, mark, unmark, or save. (App's responsibility) if(size==0) dont let it happen
-    None of these expected errors should crash the program.
-
-    Use google or the textbook to find out how to deal with files. Save this step for last as it's kind of self-isolated in a way
-
-    Recommendation: Start with writing out your program in pseudocode
-     */
 
     public static void main(String[] args) {
         scan = new Scanner(System.in);
@@ -83,43 +68,30 @@ public class App {
         How to use delimiter:
         The default delimiter is space. When you do scan.next, it reads until it reaches space.
         Now it will read until it reaches "\u200b" which is the zero-width-space character.
-
-        Your output looks something like this:
-        0) ​- [​1111-11-11] ​title 1 with spaces: ​descripntion 1 with spaces​
-1) ​- [​1212-11-11] ​title 2 with spaces: ​descripntion 2 with spaces​
-        // Initialize Scanner object
-        Scanner scan = new Scanner("JavaTpoint/Abhishek/Male/22");
-        //Initialize the string delimiter
-        scan.useDelimiter("/");
-        //Printing the tokenized Strings
-        while (scan.hasNext()) {
-            System.out.println(scan.next());
-        }
-        scan.close();
          */
 
     }
 
     private static TaskItem createTaskItemFromFile(TaskList appTaskList, Scanner fileInput) {
-        //This should read up to the first ZWSP. Doing it to throw out the task number.
+        //Reads up to the first ZWSP to throw out the task number.
         fileInput.next();
-        //This reads in "+ [" or "- [" then shorten it to just + or -
+
+        //Reads in "+ [" or "- [" then shorten it to just + or -
         String completedSymbol = fileInput.next().substring(0,1);
 
-        //This reads in "1111-11-11] " then shortens it to 1111-11-11
+        //Reads in "1111-11-11] " then shortens it to 1111-11-11
         String dueDate = fileInput.next().substring(0,10);
 
-        //This reads in "title 1 with spaces: " then shortens it to "title 1 with spaces"
+        //Reads in "title 1 with spaces: " then shortens it to "title 1 with spaces"
         String title = fileInput.next();
         title.substring(0,title.length()-2);
 
-        //This reads in "description 1 with spaces"
+        //Reads in "description 1 with spaces"
         String description = fileInput.next();
 
-        //This reads the end of line terminator hopefully. Might not work
+        //Reads the end of line terminator.
         fileInput.nextLine();
 
-        //String inputDueDate, String inputTitle, String inputDescription
         TaskItem tempItem = new TaskItem(dueDate, title, description);
 
         if(completedSymbol.equals("+")){
@@ -321,22 +293,28 @@ public class App {
     private static void SaveCurrentList(TaskList appTaskList) {
         //All of this error checking for .txt could be removed if I just append .txt to the end of whatever the user
         //inputs but I think this is better to prevent the user from creating files called tasks.txt.txt accidentally
-        System.out.println("Enter the filename to save as (must end in .txt and not be empty): ");
-        String outputFileName = scan.nextLine();
-        if (outputFileName.substring(outputFileName.length() - 4, outputFileName.length()).equals(".txt")) {
-            if (outputFileName.length() > 4) {
-                try (Formatter output = new Formatter(outputFileName)) {
-                    output.format(appTaskList + "");
-                    System.out.println("Task list has been saved successfully.\n");
-                } catch (SecurityException | FileNotFoundException | FormatterClosedException ex) {
-                    System.out.println("Something went wrong while trying to save the list. Returning to list menu...");
-                    openListMenu(appTaskList);
+        if (appTaskList.size() == 0) {
+            System.out.println("Sorry, there's nothing to save. Returning to list menu...");
+            openListMenu(appTaskList);
+        }
+        else {
+            System.out.println("Enter the filename to save as (must end in .txt and not be empty): ");
+            String outputFileName = scan.nextLine();
+            if (outputFileName.substring(outputFileName.length() - 4, outputFileName.length()).equals(".txt")) {
+                if (outputFileName.length() > 4) {
+                    try (Formatter output = new Formatter(outputFileName)) {
+                        output.format(appTaskList + "");
+                        System.out.println("Task list has been saved successfully.\n");
+                    } catch (SecurityException | FileNotFoundException | FormatterClosedException ex) {
+                        System.out.println("Something went wrong while trying to save the list. Returning to list menu...");
+                        openListMenu(appTaskList);
+                    }
+                } else {
+                    System.out.println("Filenames may not be blank");
                 }
             } else {
-                System.out.println("Filenames may not be blank");
+                System.out.println("Filenames must end with .txt");
             }
-        } else {
-            System.out.println("Filenames must end with .txt");
         }
     }
 
