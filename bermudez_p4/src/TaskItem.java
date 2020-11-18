@@ -7,14 +7,25 @@ public class TaskItem {
     private String title;
     private String description;
     private LocalDate dueDate;
+    private Boolean completed;
 
     public TaskItem() {
+        this.completed = false;
     } //Empty Constructor
 
     public TaskItem(String inputDueDate, String inputTitle, String inputDescription) {
         setDueDate(inputDueDate);
         setTitle(inputTitle);
         setDescription(inputDescription);
+        this.completed = false;
+    }
+
+    public void setCompleted() {
+        this.completed = true;
+    }
+
+    public void setUncompleted() {
+        this.completed = false;
     }
 
     public void setDueDate(String inputDueDate) {
@@ -52,4 +63,22 @@ public class TaskItem {
         return this.description;
     }
 
+    public Boolean getCompleted() {
+        return this.completed;
+    }
+
+    @Override
+    public String toString() {
+        String TaskItemString = "";
+        //+ represents completed, - represents uncompleted
+        //separator is a zero-width-space. Essentialy an invisible space. Useful as a bookmark for where variables are.
+        String separator = "\u200b";
+        if (getCompleted()) {
+            TaskItemString += (separator+"+ ");
+        } else {
+            TaskItemString += (separator+"- ");
+        }
+        TaskItemString += "[" + separator + getDueDate() + "]" + " " + separator + getTitle() + ": " + separator + getDescription() + separator;
+        return TaskItemString;
+    }
 }

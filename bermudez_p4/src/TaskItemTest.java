@@ -85,4 +85,37 @@ class TaskItemTest {
         testItem.setDescription("testDescription2");
         assertEquals("testDescription2", testItem.getDescription());
     }
+
+    @Test
+    public void newTaskItemCompletedIsFalse() {
+        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
+        assertFalse(testItem.getCompleted());
+    }
+
+    @Test
+    public void setTaskItemCompletedWorks() {
+        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
+        testItem.setCompleted();
+        assertFalse(!testItem.getCompleted());
+    }
+
+    @Test
+    public void setTaskItemUncompletedWorks() {
+        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
+        testItem.setUncompleted();
+        assertFalse(testItem.getCompleted());
+    }
+
+    @Test
+    public void toStringTaskItemWorks(){
+        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
+        System.out.println(testItem+"");
+    }
+
+    @Test
+    public void toStringTaskItemWorksCase2(){
+        TaskItem testItem = new TaskItem("2001-01-02", "testTitle2", "testDescription2");
+        testItem.setCompleted();
+        assertEquals("+ [\u200b2001-01-02] \u200btestTitle2 \u200btestDescription2", testItem+"");
+    }
 }
