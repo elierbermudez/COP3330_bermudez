@@ -109,13 +109,13 @@ class TaskItemTest {
     @Test
     public void toStringTaskItemWorks(){
         TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        System.out.println(testItem+"");
+        assertEquals("\u200B- [\u200B2000-03-04] \u200BtestTitle: \u200BtestDescription\u200B", testItem+"");
     }
 
     @Test
     public void toStringTaskItemWorksCase2(){
         TaskItem testItem = new TaskItem("2001-01-02", "testTitle2", "testDescription2");
         testItem.setCompleted();
-        assertEquals("+ [\u200b2001-01-02] \u200btestTitle2 \u200btestDescription2", testItem+"");
+        assertEquals("\u200B+ [\u200B2001-01-02] \u200BtestTitle2: \u200BtestDescription2\u200B", testItem+"");
     }
 }

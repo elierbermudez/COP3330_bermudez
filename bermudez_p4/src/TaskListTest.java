@@ -248,9 +248,9 @@ class TaskListTest {
         testList.addTaskItem(testItem2);
         testList.addTaskItem(testItem3);
         testList.completeTaskItem(1);
-        assertEquals("- [\u200B2000-03-01] \u200BtestTitle1 \u200BtestDescription1\n" +
-                "+ [\u200B2000-03-02] \u200BtestTitle2 \u200BtestDescription2\n" +
-                "- [\u200B2000-03-03] \u200BtestTitle3 \u200BtestDescription3\n", testList+"");
+        assertEquals("0) \u200B- [\u200B2000-03-01] \u200BtestTitle1: \u200BtestDescription1\u200B\n" +
+                "1) \u200B+ [\u200B2000-03-02] \u200BtestTitle2: \u200BtestDescription2\u200B\n" +
+                "2) \u200B- [\u200B2000-03-03] \u200BtestTitle3: \u200BtestDescription3\u200B\n", testList+"");
     }
 
     @Test
@@ -266,8 +266,8 @@ class TaskListTest {
         testList.addTaskItem(testItem4);
         testList.completeTaskItem(1);
         testList.completeTaskItem(3);
-        assertEquals("+ [\u200B2000-03-02] \u200BtestTitle2 \u200BtestDescription2\n" +
-                "+ [\u200B2000-03-04] \u200BtestTitle4 \u200BtestDescription4\n", testList.getCompletedTaskItemsAsString());
+        assertEquals("1) \u200B+ [\u200B2000-03-02] \u200BtestTitle2: \u200BtestDescription2\u200B\n" +
+                "3) \u200B+ [\u200B2000-03-04] \u200BtestTitle4: \u200BtestDescription4\u200B\n", testList.getCompletedTaskItemsAsString());
     }
 
     @Test
@@ -283,7 +283,7 @@ class TaskListTest {
         testList.addTaskItem(testItem4);
         testList.completeTaskItem(1);
         testList.completeTaskItem(3);
-        assertEquals("- [\u200B2000-03-01] \u200BtestTitle1 \u200BtestDescription1\n" +
-                "- [\u200B2000-03-03] \u200BtestTitle3 \u200BtestDescription3\n", testList.getUncompletedTaskItemsAsString());
+        assertEquals("0) \u200B- [\u200B2000-03-01] \u200BtestTitle1: \u200BtestDescription1\u200B\n" +
+                "2) \u200B- [\u200B2000-03-03] \u200BtestTitle3: \u200BtestDescription3\u200B\n", testList.getUncompletedTaskItemsAsString());
     }
 }
