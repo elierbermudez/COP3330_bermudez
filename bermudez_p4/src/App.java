@@ -61,7 +61,7 @@ public class App {
 
     private static void loadTaskListFromFile(TaskList appTaskList, Scanner fileInput) {
         fileInput.useDelimiter("\u200b");
-        while(fileInput.hasNext()){
+        while (fileInput.hasNext()) {
             appTaskList.addTaskItem(createTaskItemFromFile(appTaskList, fileInput));
         }
         /*
@@ -77,14 +77,14 @@ public class App {
         fileInput.next();
 
         //Reads in "+ [" or "- [" then shorten it to just + or -
-        String completedSymbol = fileInput.next().substring(0,1);
+        String completedSymbol = fileInput.next().substring(0, 1);
 
         //Reads in "1111-11-11] " then shortens it to 1111-11-11
-        String dueDate = fileInput.next().substring(0,10);
+        String dueDate = fileInput.next().substring(0, 10);
 
         //Reads in "title 1 with spaces: " then shortens it to "title 1 with spaces"
         String title = fileInput.next();
-        title.substring(0,title.length()-2);
+        title.substring(0, title.length() - 2);
 
         //Reads in "description 1 with spaces"
         String description = fileInput.next();
@@ -94,7 +94,7 @@ public class App {
 
         TaskItem tempItem = new TaskItem(dueDate, title, description);
 
-        if(completedSymbol.equals("+")){
+        if (completedSymbol.equals("+")) {
             tempItem.setCompleted();
         }
 
@@ -296,8 +296,7 @@ public class App {
         if (appTaskList.size() == 0) {
             System.out.println("Sorry, there's nothing to save. Returning to list menu...");
             openListMenu(appTaskList);
-        }
-        else {
+        } else {
             System.out.println("Enter the filename to save as (must end in .txt and not be empty): ");
             String outputFileName = scan.nextLine();
             if (outputFileName.substring(outputFileName.length() - 4, outputFileName.length()).equals(".txt")) {

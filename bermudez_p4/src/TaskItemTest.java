@@ -107,15 +107,15 @@ class TaskItemTest {
     }
 
     @Test
-    public void toStringTaskItemWorks(){
+    public void toStringTaskItemWorks() {
         TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        assertEquals("\u200B- [\u200B2000-03-04] \u200BtestTitle: \u200BtestDescription\u200B", testItem+"");
+        assertEquals("\u200B- [\u200B2000-03-04] \u200BtestTitle: \u200BtestDescription\u200B", testItem + "");
     }
 
     @Test
-    public void toStringTaskItemWorksCase2(){
+    public void toStringTaskItemWorksCase2() {
         TaskItem testItem = new TaskItem("2001-01-02", "testTitle2", "testDescription2");
         testItem.setCompleted();
-        assertEquals("\u200B+ [\u200B2001-01-02] \u200BtestTitle2: \u200BtestDescription2\u200B", testItem+"");
+        assertEquals("\u200B+ [\u200B2001-01-02] \u200BtestTitle2: \u200BtestDescription2\u200B", testItem + "");
     }
 }

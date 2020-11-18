@@ -36,6 +36,7 @@ class TaskListTest {
             assertEquals(1, 1);
         }
     }
+
     @Test
     public void editingTaskItemChangesValues() {
         TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
@@ -48,9 +49,8 @@ class TaskListTest {
             assertEquals("2000-03-05", testItem.getDueDate());
             assertEquals("testTitle2", testItem.getTitle());
             assertEquals("testDescription2", testItem.getDescription());
-        }
-        catch(Exception ex){
-            assertEquals(0,1);
+        } catch (Exception ex) {
+            assertEquals(0, 1);
         }
     }
 
@@ -60,7 +60,7 @@ class TaskListTest {
         TaskList testList = new TaskList();
         testList.addTaskItem(testItem);
         testList.editTaskItemDescription("testDescription2", 0);
-        assertEquals("testDescription2",testItem.getDescription());
+        assertEquals("testDescription2", testItem.getDescription());
     }
 
     @Test
@@ -82,7 +82,7 @@ class TaskListTest {
         TaskList testList = new TaskList();
         testList.addTaskItem(testItem);
         testList.editTaskItemDueDate("2000-03-05", 0);
-        assertEquals("2000-03-05",testItem.getDueDate());
+        assertEquals("2000-03-05", testItem.getDueDate());
     }
 
     @Test
@@ -104,7 +104,7 @@ class TaskListTest {
         TaskList testList = new TaskList();
         testList.addTaskItem(testItem);
         testList.editTaskItemTitle("testTitle2", 0);
-        assertEquals("testTitle2",testItem.getTitle());
+        assertEquals("testTitle2", testItem.getTitle());
     }
 
     @Test
@@ -189,6 +189,7 @@ class TaskListTest {
         TaskList testList = new TaskList();
         assertEquals(0, testList.size());
     }
+
     /*
     removingTaskItemsDecreasesSize()
     removingTaskItemsFailsWithInvalidIndex()
@@ -214,6 +215,7 @@ class TaskListTest {
             assertEquals(1, 1);
         }
     }
+
     @Test
     public void uncompletingTaskItemChangesStatus() {
         TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
@@ -250,7 +252,7 @@ class TaskListTest {
         testList.completeTaskItem(1);
         assertEquals("0) \u200B- [\u200B2000-03-01] \u200BtestTitle1: \u200BtestDescription1\u200B\n" +
                 "1) \u200B+ [\u200B2000-03-02] \u200BtestTitle2: \u200BtestDescription2\u200B\n" +
-                "2) \u200B- [\u200B2000-03-03] \u200BtestTitle3: \u200BtestDescription3\u200B\n", testList+"");
+                "2) \u200B- [\u200B2000-03-03] \u200BtestTitle3: \u200BtestDescription3\u200B\n", testList + "");
     }
 
     @Test
