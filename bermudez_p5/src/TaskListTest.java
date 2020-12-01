@@ -181,7 +181,6 @@ class TaskListTest {
 
     @Test
     public void newTaskListIsEmpty() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
         TaskList testList = new TaskList();
         assertEquals(0, testList.size());
     }
