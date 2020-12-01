@@ -11,7 +11,6 @@ import java.nio.file.Paths;
 public class ContactApp {
     /*
     Extra Functions:
-A contact list shall contain 1 or more contact items
 
 A user shall be able to create a new contact list
 A user shall be able to load an existing contact list
@@ -26,25 +25,23 @@ A user shall be able to remove a contact from the current contact list
 
     public static void main(String[] args) {
         scan = new Scanner(System.in);
-        openMainMenu();
+        openContactMainMenu();
     }
 
-    private static void openMainMenu() {
+    private static void openContactMainMenu() {
         int response;
         while (true) {
-            printMainMenu();
+            printContactMainMenu();
             response = scan.nextInt();
             scan.nextLine();
 
             switch (response) {
                 case 1 -> {
-                    System.out.println("New task list has been created\n");
-                    TaskList appTaskList = new TaskList();
-                    openListMenu(appTaskList);
+                    System.out.println("New contact list has been created\n");
+                    ContactList appContactList = new ContactList();
+                    openContactListMenu(appContactList);
                 }
-                case 2 -> {
-                    openLoadMenu();
-                }
+                case 2 -> openContactLoadMenu();
                 case 3 -> {
                     System.out.println("Goodbye");
                     System.exit(0);
@@ -54,28 +51,28 @@ A user shall be able to remove a contact from the current contact list
         }
     }
 
-    private static void openLoadMenu() {
+    private static void openContactLoadMenu() {
         System.out.println("Enter the filename to load:");
         String filename = scan.nextLine();
-        TaskList appTaskList = new TaskList();
+        ContactList appContactList = new ContactList();
 
         try (Scanner fileInput = new Scanner(Paths.get(filename))) {
-            loadTaskListFromFile(appTaskList, fileInput);
-            System.out.println("Task list has been loaded");
-            openListMenu(appTaskList);
+            loadContactListFromFile(appContactList, fileInput);
+            System.out.println("Contact list has been loaded");
+            openContactListMenu(appContactList);
         } catch (IOException | IllegalStateException e) {
             System.out.println("Something went wrong when loading the file. Returning to main menu...");
-            openMainMenu();
+            openContactMainMenu();
         } catch (NoSuchElementException ex) {
             System.out.println("That file does not exist or could not be found. Returning to main menu...");
-            openMainMenu();
+            openContactMainMenu();
         }
     }
 
-    private static void loadTaskListFromFile(TaskList appTaskList, Scanner fileInput) {
+    private static void loadContactListFromFile(ContactList appContactList, Scanner fileInput) {
         fileInput.useDelimiter("\u200b");
         while (fileInput.hasNext()) {
-            appTaskList.addTaskItem(createTaskItemFromFile(appTaskList, fileInput));
+            appContactList.addContactItem(createContactItemFromFile(appContactList, fileInput));
         }
         /*
         How to use delimiter:
@@ -85,241 +82,187 @@ A user shall be able to remove a contact from the current contact list
 
     }
 
-    private static TaskItem createTaskItemFromFile(TaskList appTaskList, Scanner fileInput) {
-        //Reads up to the first ZWSP to throw out the task number.
+    private static ContactItem createContactItemFromFile(ContactList appContactList, Scanner fileInput) {
+        //This section could be made "simpler" if I instead only using fileInput.next() to scan in everything
+        //then continued to use the substring shortening method to make things the right size
+        //but this would require a lot of trial and error and would break if the printing format changes
+        //by even a single character
+
+        //Reads up to the first ZWSP to throw out the task number and name prefix.
         fileInput.next();
 
-        //Reads in "+ [" or "- [" then shorten it to just + or -
-        String completedSymbol = fileInput.next().substring(0, 1);
+        //CHECK: This section might not be working correctly. Check it closely.
+        //Reads in "Name " then shortens it to "Name"
+        String firstName = fileInput.next();
+        firstName = firstName.substring(0, firstName.length() - 1);
 
-        //Reads in "1111-11-11] " then shortens it to 1111-11-11
-        String dueDate = fileInput.next().substring(0, 10);
+        //Reads in "LName"
+        String lastName = fileInput.nextLine();
 
-        //Reads in "title 1 with spaces: " then shortens it to "title 1 with spaces"
-        String title = fileInput.next();
-        title = title.substring(0, title.length() - 2);
+        //Reads up to the ZWSP right before phone# to throw out the phone prefix.
+        fileInput.next();
 
-        //Reads in "description 1 with spaces"
-        String description = fileInput.next();
+        //Reads in Phone
+        String phone = fileInput.nextLine();
 
-        //Reads the end of line terminator.
-        fileInput.nextLine();
+        //Reads up to the ZWSP right before Email to throw out the email prefix.
+        fileInput.next();
 
-        TaskItem tempItem = new TaskItem(dueDate, title, description);
+        //Reads in Email
+        String email = fileInput.nextLine();
 
-        if (completedSymbol.equals("+")) {
-            tempItem.setCompleted();
-        }
+        ContactItem tempItem = new ContactItem(firstName, lastName, phone, email);
 
         return tempItem;
     }
 
-    private static void openListMenu(TaskList appTaskList) {
+    private static void openContactListMenu(ContactList appContactList) {
         int response;
         while (true) {
-            printListMenu();
+            printContactListMenu();
             response = scan.nextInt();
             scan.nextLine();
 
             switch (response) {
-                case 1 -> {
-                    viewTaskList(appTaskList);
-                }
-                case 2 -> {
-                    addATask(appTaskList);
-                }
-                case 3 -> {
-                    editATask(appTaskList);
-                }
-                case 4 -> {
-                    removeATask(appTaskList);
-                }
-                case 5 -> {
-                    markATaskComplete(appTaskList);
-                }
-                case 6 -> {
-                    markATaskIncomplete(appTaskList);
-                }
-                case 7 -> {
-                    SaveCurrentList(appTaskList);
-                }
-                case 8 -> {
-                    openMainMenu();
-                }
+                case 1 -> viewContactList(appContactList);
+                case 2 -> addAContact(appContactList);
+                case 3 -> editAContact(appContactList);
+                case 4 -> removeAContact(appContactList);
+                case 5 -> SaveCurrentContactList(appContactList);
+                case 6 -> openContactMainMenu();
                 default -> System.out.println("I'm not sure I understood that. Please enter a number from 1-8\n");
             }
         }
     }
 
-    private static void viewTaskList(TaskList appTaskList) {
-        System.out.println("Current Tasks\n" + "-------------\n\n" + appTaskList);
+    private static void viewContactList(ContactList appContactList) {
+        System.out.println("Current Contacts\n" + "-------------\n\n" + appContactList);
     }
 
-    private static void viewUncompletedTaskList(TaskList appTaskList) {
-        if (appTaskList.getUncompletedTaskItemsAsString().equals("")) {
-            throw new IllegalArgumentException();
-        } else {
-            System.out.println("Current Tasks\n" + "-------------\n\n" + appTaskList.getUncompletedTaskItemsAsString());
-        }
-    }
+    private static void addAContact(ContactList appContactList) {
+        ContactItem appContactItem = new ContactItem();
 
-    private static void viewCompletedTaskList(TaskList appTaskList) {
-        if (appTaskList.getCompletedTaskItemsAsString().equals("")) {
-            throw new IllegalArgumentException();
-        } else {
-            System.out.println("Current Tasks\n" + "-------------\n\n" + appTaskList.getCompletedTaskItemsAsString());
-        }
-    }
+        System.out.println("First name: ");
+        appContactItem.setFirstName(scan.nextLine());
 
-    private static void addATask(TaskList appTaskList) {
-        TaskItem appTaskItem = new TaskItem();
+        System.out.println("Last name: ");
+        appContactItem.setLastName(scan.nextLine());
 
-        System.out.println("Task title: ");
+        System.out.println("Phone number (xxx-xxx-xxxx): ");
+        appContactItem.setPhoneNumber(scan.nextLine());
+
+        //The only error which should be handles is if all fields are empty
+        //If the previous 3 fields were empty, and now email is also empty, this will trigger an exception
+        //If any of the previous 3 were not empty, the exception will not be triggered
+        //Therefore I should only need a try catch on the last field being taken in
+        System.out.println("Email address (x@y.z): ");
         try {
-            appTaskItem.setTitle(scan.nextLine());
+            appContactItem.setEmail(scan.nextLine());
         } catch (IllegalArgumentException ex) {
-            System.out.println("Whoops, task titles may not be empty. Returning to list menu...");
-            openListMenu(appTaskList);
+            System.out.println("Sorry, contacts may not be completely empty. Returning to list menu...");
+            openContactListMenu(appContactList);
             return;
         }
-
-        System.out.println("Task description: ");
-        appTaskItem.setDescription(scan.nextLine());
-
-        System.out.println("Task due date (YYYY-MM-DD): ");
-        try {
-            appTaskItem.setDueDate(scan.nextLine());
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Whoops, task due dates must be in the format (YYYY-MM-DD). Returning to list menu...");
-            openListMenu(appTaskList);
-        }
-        appTaskList.addTaskItem(appTaskItem);
+        appContactList.addContactItem(appContactItem);
     }
 
-    private static void editATask(TaskList appTaskList) {
-        //I decided to program this so that if the user gives bad input on the last section
-        //Then it will still keep the changes that they made on the first 2 sections.
-        //In real world application it would be annoying to type out a very long task description
-        //Then lose everything because you typed the date wrong.
-        if (appTaskList.size() == 0) {
+    private static void editAContact(ContactList appContactList) {
+        //Check assumption: If a change would make a contact empty, it is not allowed to go through.
+        //If an error occurs, changes made before that error will be maintained.
+        if (appContactList.size() == 0) {
             System.out.println("Sorry, there's nothing to edit. Returning to list menu...");
-            openListMenu(appTaskList);
+            openContactListMenu(appContactList);
         } else {
-            viewTaskList(appTaskList);
+            viewContactList(appContactList);
 
-            System.out.println("Which task will you edit? ");
+            System.out.println("Which contact will you edit? ");
             int userChoice = scan.nextInt();
             scan.nextLine();
-            if ((userChoice > (appTaskList.size() - 1)) || userChoice < 0) {
-                System.out.println("Whoops, your choice should be one of the items on the list. Returning to list menu...");
-                openListMenu(appTaskList);
+            if ((userChoice > (appContactList.size() - 1)) || userChoice < 0) {
+                System.out.println("Whoops, your choice should be one of the items on the list. Returning to list " +
+                        "menu...");
+                openContactListMenu(appContactList);
             } else {
-                System.out.println("Enter a new title for task " + userChoice + ": ");
+                System.out.println("Enter a new first name for contact " + userChoice + ": ");
                 try {
-                    appTaskList.editTaskItemTitle(scan.nextLine(), userChoice);
+                    appContactList.editContactItemFirstName(scan.nextLine(), userChoice);
                 } catch (IllegalArgumentException ex) {
-                    System.out.println("Whoops, task titles may not be empty. Returning to list menu...");
-                    openListMenu(appTaskList);
+                    System.out.println("Whoops, an error occurred. Contacts may not be empty. Returning to list menu." +
+                            "..");
+                    openContactListMenu(appContactList);
                     return;
                 }
 
-                System.out.println("Enter a new description for task " + userChoice + ": ");
-                appTaskList.editTaskItemDescription(scan.nextLine(), userChoice);
-
-                System.out.println("Enter a new task due date (YYYY-MM-DD) for task " + userChoice + ": ");
+                System.out.println("Enter a new last name for contact " + userChoice + ": ");
                 try {
-                    appTaskList.editTaskItemDueDate(scan.nextLine(), userChoice);
+                    appContactList.editContactItemLastName(scan.nextLine(), userChoice);
                 } catch (IllegalArgumentException ex) {
-                    System.out.println("Whoops, task due dates must be in the format (YYYY-MM-DD). Returning to list menu...");
-                    openListMenu(appTaskList);
+                    System.out.println("Whoops, an error occurred. Contacts may not be empty. Returning to list menu." +
+                            "..");
+                    openContactListMenu(appContactList);
+                    return;
+                }
+
+                System.out.println("Enter a new phone number for contact " + userChoice + ": ");
+                try {
+                    appContactList.editContactItemPhone(scan.nextLine(), userChoice);
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Whoops, an error occurred. Contacts may not be empty. Returning to list menu." +
+                            "..");
+                    openContactListMenu(appContactList);
+                    return;
+                }
+
+                System.out.println("Enter a new email for contact " + userChoice + ": ");
+                try {
+                    appContactList.editContactItemEmail(scan.nextLine(), userChoice);
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Whoops, an error occurred. Contacts may not be empty. Returning to list menu." +
+                            "..");
+                    openContactListMenu(appContactList);
                 }
             }
         }
     }
 
-    private static void removeATask(TaskList appTaskList) {
-        if (appTaskList.size() == 0) {
+    private static void removeAContact(ContactList appContactList) {
+        if (appContactList.size() == 0) {
             System.out.println("Sorry, there's nothing to remove. Returning to list menu...");
-            openListMenu(appTaskList);
+            openContactListMenu(appContactList);
         } else {
-            viewTaskList(appTaskList);
+            viewContactList(appContactList);
 
-            System.out.println("Which task will you remove? ");
+            System.out.println("Which contact will you remove? ");
             int userChoice = scan.nextInt();
             scan.nextLine();
-            if ((userChoice > (appTaskList.size() - 1)) || userChoice < 0) {
-                System.out.println("Whoops, your choice should be one of the items on the list. Returning to list menu...");
-                openListMenu(appTaskList);
+            if ((userChoice > (appContactList.size() - 1)) || userChoice < 0) {
+                System.out.println("Whoops, your choice should be one of the items on the list. Returning to list " +
+                        "menu...");
+                openContactListMenu(appContactList);
             } else {
-                appTaskList.removeTaskItem(userChoice);
+                appContactList.removeContactItem(userChoice);
             }
         }
     }
 
-    private static void markATaskComplete(TaskList appTaskList) {
-        if (appTaskList.size() == 0) {
-            System.out.println("Sorry, there's nothing to mark complete. Returning to list menu...");
-            openListMenu(appTaskList);
-        } else {
-            try {
-                viewUncompletedTaskList(appTaskList);
-            } catch (IllegalArgumentException ex) {
-                System.out.println("Looks like you finished everything! Good job! Returning to list menu...");
-                openListMenu(appTaskList);
-            }
-
-            System.out.println("Which task will you mark as complete? ");
-            int userChoice = scan.nextInt();
-            scan.nextLine();
-            if ((userChoice > (appTaskList.size() - 1)) || userChoice < 0) {
-                System.out.println("Whoops, your choice should be one of the items on the list. Returning to list menu...");
-                openListMenu(appTaskList);
-            } else {
-                appTaskList.completeTaskItem(userChoice);
-            }
-        }
-    }
-
-    private static void markATaskIncomplete(TaskList appTaskList) {
-        if (appTaskList.size() == 0) {
-            System.out.println("Sorry, there's nothing to mark incomplete. Returning to list menu...");
-            openListMenu(appTaskList);
-        } else {
-            try {
-                viewCompletedTaskList(appTaskList);
-            } catch (IllegalArgumentException ex) {
-                System.out.println("Looks like you haven't completed anything yet. Returning to list menu...");
-                openListMenu(appTaskList);
-            }
-            System.out.println("Which task will you mark as incomplete? ");
-            int userChoice = scan.nextInt();
-            scan.nextLine();
-            if ((userChoice > (appTaskList.size() - 1)) || userChoice < 0) {
-                System.out.println("Whoops, your choice should be one of the items on the list. Returning to list menu...");
-                openListMenu(appTaskList);
-            } else {
-                appTaskList.uncompleteTaskItem(userChoice);
-            }
-        }
-    }
-
-    private static void SaveCurrentList(TaskList appTaskList) {
+    private static void SaveCurrentContactList(ContactList appContactList) {
         //All of this error checking for .txt could be removed if I just append .txt to the end of whatever the user
         //inputs but I think this is better to prevent the user from creating files called tasks.txt.txt accidentally
-        if (appTaskList.size() == 0) {
+        if (appContactList.size() == 0) {
             System.out.println("Sorry, there's nothing to save. Returning to list menu...");
-            openListMenu(appTaskList);
+            openContactListMenu(appContactList);
         } else {
             System.out.println("Enter the filename to save as (must end in .txt and not be empty): ");
             String outputFileName = scan.nextLine();
             if (outputFileName.substring(outputFileName.length() - 4, outputFileName.length()).equals(".txt")) {
                 if (outputFileName.length() > 4) {
                     try (Formatter output = new Formatter(outputFileName)) {
-                        output.format(appTaskList + "");
-                        System.out.println("Task list has been saved successfully.\n");
+                        output.format(appContactList + "");
+                        System.out.println("Contact list has been saved successfully.\n");
                     } catch (SecurityException | FileNotFoundException | FormatterClosedException ex) {
-                        System.out.println("Something went wrong while trying to save the list. Returning to list menu...");
-                        openListMenu(appTaskList);
+                        System.out.println("Something went wrong while trying to save the list. Returning to list " +
+                                "menu...");
+                        openContactListMenu(appContactList);
                     }
                 } else {
                     System.out.println("Filenames may not be blank");
@@ -330,23 +273,21 @@ A user shall be able to remove a contact from the current contact list
         }
     }
 
-    private static void printMainMenu() {
+    private static void printContactMainMenu() {
         System.out.println("Main Menu\n---------\n");
-        System.out.println("1) Create a new task list");
-        System.out.println("2) Load an existing task list");
+        System.out.println("1) Create a new contact list");
+        System.out.println("2) Load an existing contact list");
         System.out.println("3) Quit");
     }
 
-    private static void printListMenu() {
+    private static void printContactListMenu() {
         System.out.println("List Operation Menu\n---------\n");
-        System.out.println("1) View the task list");
-        System.out.println("2) Add a task");
-        System.out.println("3) Edit a task");
-        System.out.println("4) Remove a task");
-        System.out.println("5) Mark a task as complete");
-        System.out.println("6) Mark a task as incomplete");
-        System.out.println("7) Save the current list");
-        System.out.println("8) Quit to the main menu");
+        System.out.println("1) View the contact list");
+        System.out.println("2) Add a contact");
+        System.out.println("3) Edit a contact");
+        System.out.println("4) Remove a contact");
+        System.out.println("5) Save the current list");
+        System.out.println("6) Quit to the main menu");
     }
 
 }

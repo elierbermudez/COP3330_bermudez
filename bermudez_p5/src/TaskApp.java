@@ -13,13 +13,13 @@ public class TaskApp {
 
     public static void main(String[] args) {
         scan = new Scanner(System.in);
-        openMainMenu();
+        openTaskMainMenu();
     }
 
-    private static void openMainMenu() {
+    private static void openTaskMainMenu() {
         int response;
         while (true) {
-            printMainMenu();
+            printTaskMainMenu();
             response = scan.nextInt();
             scan.nextLine();
 
@@ -27,10 +27,10 @@ public class TaskApp {
                 case 1 -> {
                     System.out.println("New task list has been created\n");
                     TaskList appTaskList = new TaskList();
-                    openListMenu(appTaskList);
+                    openTaskListMenu(appTaskList);
                 }
                 case 2 -> {
-                    openLoadMenu();
+                    openTaskLoadMenu();
                 }
                 case 3 -> {
                     System.out.println("Goodbye");
@@ -41,7 +41,7 @@ public class TaskApp {
         }
     }
 
-    private static void openLoadMenu() {
+    private static void openTaskLoadMenu() {
         System.out.println("Enter the filename to load:");
         String filename = scan.nextLine();
         TaskList appTaskList = new TaskList();
@@ -49,13 +49,13 @@ public class TaskApp {
         try (Scanner fileInput = new Scanner(Paths.get(filename))) {
             loadTaskListFromFile(appTaskList, fileInput);
             System.out.println("Task list has been loaded");
-            openListMenu(appTaskList);
+            openTaskListMenu(appTaskList);
         } catch (IOException | IllegalStateException e) {
             System.out.println("Something went wrong when loading the file. Returning to main menu...");
-            openMainMenu();
+            openTaskMainMenu();
         } catch (NoSuchElementException ex) {
             System.out.println("That file does not exist or could not be found. Returning to main menu...");
-            openMainMenu();
+            openTaskMainMenu();
         }
     }
 
@@ -101,10 +101,10 @@ public class TaskApp {
         return tempItem;
     }
 
-    private static void openListMenu(TaskList appTaskList) {
+    private static void openTaskListMenu(TaskList appTaskList) {
         int response;
         while (true) {
-            printListMenu();
+            printTaskListMenu();
             response = scan.nextInt();
             scan.nextLine();
 
@@ -128,10 +128,10 @@ public class TaskApp {
                     markATaskIncomplete(appTaskList);
                 }
                 case 7 -> {
-                    SaveCurrentList(appTaskList);
+                    SaveCurrentTaskList(appTaskList);
                 }
                 case 8 -> {
-                    openMainMenu();
+                    openTaskMainMenu();
                 }
                 default -> System.out.println("I'm not sure I understood that. Please enter a number from 1-8\n");
             }
@@ -166,7 +166,7 @@ public class TaskApp {
             appTaskItem.setTitle(scan.nextLine());
         } catch (IllegalArgumentException ex) {
             System.out.println("Whoops, task titles may not be empty. Returning to list menu...");
-            openListMenu(appTaskList);
+            openTaskListMenu(appTaskList);
             return;
         }
 
@@ -178,7 +178,7 @@ public class TaskApp {
             appTaskItem.setDueDate(scan.nextLine());
         } catch (IllegalArgumentException ex) {
             System.out.println("Whoops, task due dates must be in the format (YYYY-MM-DD). Returning to list menu...");
-            openListMenu(appTaskList);
+            openTaskListMenu(appTaskList);
         }
         appTaskList.addTaskItem(appTaskItem);
     }
@@ -190,7 +190,7 @@ public class TaskApp {
         //Then lose everything because you typed the date wrong.
         if (appTaskList.size() == 0) {
             System.out.println("Sorry, there's nothing to edit. Returning to list menu...");
-            openListMenu(appTaskList);
+            openTaskListMenu(appTaskList);
         } else {
             viewTaskList(appTaskList);
 
@@ -199,14 +199,14 @@ public class TaskApp {
             scan.nextLine();
             if ((userChoice > (appTaskList.size() - 1)) || userChoice < 0) {
                 System.out.println("Whoops, your choice should be one of the items on the list. Returning to list menu...");
-                openListMenu(appTaskList);
+                openTaskListMenu(appTaskList);
             } else {
                 System.out.println("Enter a new title for task " + userChoice + ": ");
                 try {
                     appTaskList.editTaskItemTitle(scan.nextLine(), userChoice);
                 } catch (IllegalArgumentException ex) {
                     System.out.println("Whoops, task titles may not be empty. Returning to list menu...");
-                    openListMenu(appTaskList);
+                    openTaskListMenu(appTaskList);
                     return;
                 }
 
@@ -218,7 +218,7 @@ public class TaskApp {
                     appTaskList.editTaskItemDueDate(scan.nextLine(), userChoice);
                 } catch (IllegalArgumentException ex) {
                     System.out.println("Whoops, task due dates must be in the format (YYYY-MM-DD). Returning to list menu...");
-                    openListMenu(appTaskList);
+                    openTaskListMenu(appTaskList);
                 }
             }
         }
@@ -227,7 +227,7 @@ public class TaskApp {
     private static void removeATask(TaskList appTaskList) {
         if (appTaskList.size() == 0) {
             System.out.println("Sorry, there's nothing to remove. Returning to list menu...");
-            openListMenu(appTaskList);
+            openTaskListMenu(appTaskList);
         } else {
             viewTaskList(appTaskList);
 
@@ -236,7 +236,7 @@ public class TaskApp {
             scan.nextLine();
             if ((userChoice > (appTaskList.size() - 1)) || userChoice < 0) {
                 System.out.println("Whoops, your choice should be one of the items on the list. Returning to list menu...");
-                openListMenu(appTaskList);
+                openTaskListMenu(appTaskList);
             } else {
                 appTaskList.removeTaskItem(userChoice);
             }
@@ -246,13 +246,13 @@ public class TaskApp {
     private static void markATaskComplete(TaskList appTaskList) {
         if (appTaskList.size() == 0) {
             System.out.println("Sorry, there's nothing to mark complete. Returning to list menu...");
-            openListMenu(appTaskList);
+            openTaskListMenu(appTaskList);
         } else {
             try {
                 viewUncompletedTaskList(appTaskList);
             } catch (IllegalArgumentException ex) {
                 System.out.println("Looks like you finished everything! Good job! Returning to list menu...");
-                openListMenu(appTaskList);
+                openTaskListMenu(appTaskList);
             }
 
             System.out.println("Which task will you mark as complete? ");
@@ -260,7 +260,7 @@ public class TaskApp {
             scan.nextLine();
             if ((userChoice > (appTaskList.size() - 1)) || userChoice < 0) {
                 System.out.println("Whoops, your choice should be one of the items on the list. Returning to list menu...");
-                openListMenu(appTaskList);
+                openTaskListMenu(appTaskList);
             } else {
                 appTaskList.completeTaskItem(userChoice);
             }
@@ -270,32 +270,32 @@ public class TaskApp {
     private static void markATaskIncomplete(TaskList appTaskList) {
         if (appTaskList.size() == 0) {
             System.out.println("Sorry, there's nothing to mark incomplete. Returning to list menu...");
-            openListMenu(appTaskList);
+            openTaskListMenu(appTaskList);
         } else {
             try {
                 viewCompletedTaskList(appTaskList);
             } catch (IllegalArgumentException ex) {
                 System.out.println("Looks like you haven't completed anything yet. Returning to list menu...");
-                openListMenu(appTaskList);
+                openTaskListMenu(appTaskList);
             }
             System.out.println("Which task will you mark as incomplete? ");
             int userChoice = scan.nextInt();
             scan.nextLine();
             if ((userChoice > (appTaskList.size() - 1)) || userChoice < 0) {
                 System.out.println("Whoops, your choice should be one of the items on the list. Returning to list menu...");
-                openListMenu(appTaskList);
+                openTaskListMenu(appTaskList);
             } else {
                 appTaskList.uncompleteTaskItem(userChoice);
             }
         }
     }
 
-    private static void SaveCurrentList(TaskList appTaskList) {
+    private static void SaveCurrentTaskList(TaskList appTaskList) {
         //All of this error checking for .txt could be removed if I just append .txt to the end of whatever the user
         //inputs but I think this is better to prevent the user from creating files called tasks.txt.txt accidentally
         if (appTaskList.size() == 0) {
             System.out.println("Sorry, there's nothing to save. Returning to list menu...");
-            openListMenu(appTaskList);
+            openTaskListMenu(appTaskList);
         } else {
             System.out.println("Enter the filename to save as (must end in .txt and not be empty): ");
             String outputFileName = scan.nextLine();
@@ -306,7 +306,7 @@ public class TaskApp {
                         System.out.println("Task list has been saved successfully.\n");
                     } catch (SecurityException | FileNotFoundException | FormatterClosedException ex) {
                         System.out.println("Something went wrong while trying to save the list. Returning to list menu...");
-                        openListMenu(appTaskList);
+                        openTaskListMenu(appTaskList);
                     }
                 } else {
                     System.out.println("Filenames may not be blank");
@@ -317,14 +317,14 @@ public class TaskApp {
         }
     }
 
-    private static void printMainMenu() {
+    private static void printTaskMainMenu() {
         System.out.println("Main Menu\n---------\n");
         System.out.println("1) Create a new task list");
         System.out.println("2) Load an existing task list");
         System.out.println("3) Quit");
     }
 
-    private static void printListMenu() {
+    private static void printTaskListMenu() {
         System.out.println("List Operation Menu\n---------\n");
         System.out.println("1) View the task list");
         System.out.println("2) Add a task");
