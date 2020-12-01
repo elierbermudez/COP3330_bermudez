@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 public class TaskApp {
     private static Scanner scan;
 
-    public static void main(String[] args) {
+    public static void mainTask() {
         scan = new Scanner(System.in);
         openTaskMainMenu();
     }
@@ -34,7 +34,7 @@ public class TaskApp {
                 }
                 case 3 -> {
                     System.out.println("Goodbye");
-                    System.exit(0);
+                    App.openApplicationMainMenu();
                 }
                 default -> System.out.println("I'm not sure I understood that. Please enter the number 1, 2, or 3\n");
             }

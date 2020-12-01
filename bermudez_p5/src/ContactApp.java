@@ -9,21 +9,9 @@ import java.lang.IllegalStateException;
 import java.nio.file.Paths;
 
 public class ContactApp {
-    /*
-    Extra Functions:
-
-A user shall be able to create a new contact list
-A user shall be able to load an existing contact list
-A user shall be able to view the current contact list
-A user shall be able to save the current contact list
-A user shall be able to add a contact to the current contact list
-A user shall be able to edit a contact in the current contact list
-A user shall be able to remove a contact from the current contact list
-     */
-    //All of this is copy pasted over from TaskApp, none of it will function properly for ContactApp
     private static Scanner scan;
 
-    public static void main(String[] args) {
+    public static void mainContact() {
         scan = new Scanner(System.in);
         openContactMainMenu();
     }
@@ -44,7 +32,7 @@ A user shall be able to remove a contact from the current contact list
                 case 2 -> openContactLoadMenu();
                 case 3 -> {
                     System.out.println("Goodbye");
-                    System.exit(0);
+                    App.openApplicationMainMenu();
                 }
                 default -> System.out.println("I'm not sure I understood that. Please enter the number 1, 2, or 3\n");
             }
