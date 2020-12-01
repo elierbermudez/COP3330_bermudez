@@ -3,126 +3,140 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class ContactItemTest {
-    /* Implement the following tests at a minimum:
-
-creationFailsWithAllBlankValues()
-creationSucceedsWithBlankEmail()
-creationSucceedsWithBlankFirstName()
-creationSucceedsWithBlankLastName()
-creationSucceedsWithBlankPhone()
-creationSucceedsWithNonBlankValues()
-editingFailsWithAllBlankValues()
-editingSucceedsWithBlankEmail()
-editingSucceedsWithBlankFirstName()
-editingSucceedsWithBlankLastName()
-editingSucceedsWithBlankPhone()
-editingSucceedsWithNonBlankValues()
-testToString()
-     */
-    //All of this is imported over from TaskItemTest
     @Test
-    public void creatingTaskItemFailsWithInvalidDueDate() {
+    public void creationSucceedsWithNonBlankValues(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "Email");
+        assertEquals("Elier", testItem.getFirstName());
+        assertEquals("Bermudez", testItem.getLastName());
+        assertEquals("Phone", testItem.getPhoneNumber());
+        assertEquals("Email", testItem.getEmail());
+    }
+
+    @Test
+    public void creationFailsWithAllBlankValues() {
         boolean exceptionHappened = false;
         try {
-            TaskItem testItem = new TaskItem("2000-02-30", "testTitle", "testDescription");
+            ContactItem testItem = new ContactItem("", "", "", "");
         } catch (IllegalArgumentException ex) {
             exceptionHappened = true;
         } finally {
-            assertEquals(true, exceptionHappened);
+            assertTrue(exceptionHappened);
         }
     }
 
     @Test
-    public void creatingTaskItemFailsWithInvalidTitle() {
+    public void creationSucceedsWithBlankFirstName(){
+        ContactItem testItem = new ContactItem("", "Bermudez", "Phone", "Email");
+        assertEquals("", testItem.getFirstName());
+        assertEquals("Bermudez", testItem.getLastName());
+        assertEquals("Phone", testItem.getPhoneNumber());
+        assertEquals("Email", testItem.getEmail());
+    }
+
+    @Test
+    public void creationSucceedsWithBlankLastName(){
+        ContactItem testItem = new ContactItem("Elier", "", "Phone", "Email");
+        assertEquals("Elier", testItem.getFirstName());
+        assertEquals("", testItem.getLastName());
+        assertEquals("Phone", testItem.getPhoneNumber());
+        assertEquals("Email", testItem.getEmail());
+    }
+
+    @Test
+    public void creationSucceedsWithBlankPhone(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "", "Email");
+        assertEquals("Elier", testItem.getFirstName());
+        assertEquals("Bermudez", testItem.getLastName());
+        assertEquals("", testItem.getPhoneNumber());
+        assertEquals("Email", testItem.getEmail());
+    }
+
+    @Test
+    public void creationSucceedsWithBlankEmail(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "");
+        assertEquals("Elier", testItem.getFirstName());
+        assertEquals("Bermudez", testItem.getLastName());
+        assertEquals("Phone", testItem.getPhoneNumber());
+        assertEquals("", testItem.getEmail());
+    }
+
+    @Test
+    public void editingSucceedsWithNonBlankValues(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "Email");
+        testItem.setFirstName("Elier2");
+        testItem.setLastName("Bermudez2");
+        testItem.setPhoneNumber("Phone2");
+        testItem.setEmail("Email2");
+        assertEquals("Elier2", testItem.getFirstName());
+        assertEquals("Bermudez2", testItem.getLastName());
+        assertEquals("Phone2", testItem.getPhoneNumber());
+        assertEquals("Email2", testItem.getEmail());
+    }
+
+    @Test
+    public void editingSucceedsWithBlankFirstName(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "Email");
+        testItem.setFirstName("");
+        assertEquals("", testItem.getFirstName());
+        assertEquals("Bermudez", testItem.getLastName());
+        assertEquals("Phone", testItem.getPhoneNumber());
+        assertEquals("Email", testItem.getEmail());
+    }
+
+    @Test
+    public void editingSucceedsWithBlankLastName(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "Email");
+        testItem.setLastName("");
+        assertEquals("Elier", testItem.getFirstName());
+        assertEquals("", testItem.getLastName());
+        assertEquals("Phone", testItem.getPhoneNumber());
+        assertEquals("Email", testItem.getEmail());
+    }
+
+    @Test
+    public void editingSucceedsWithBlankPhone(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "Email");
+        testItem.setPhoneNumber("");
+        assertEquals("Elier", testItem.getFirstName());
+        assertEquals("Bermudez", testItem.getLastName());
+        assertEquals("", testItem.getPhoneNumber());
+        assertEquals("Email", testItem.getEmail());
+    }
+
+    @Test
+    public void editingSucceedsWithBlankEmail(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "Email");
+        testItem.setEmail("");
+        assertEquals("Elier", testItem.getFirstName());
+        assertEquals("Bermudez", testItem.getLastName());
+        assertEquals("Phone", testItem.getPhoneNumber());
+        assertEquals("", testItem.getEmail());
+    }
+
+    @Test
+    public void editingFailsWithAllBlankValues(){
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "Email");
+        testItem.setFirstName("");
+        testItem.setLastName("");
+        testItem.setPhoneNumber("");
+
         boolean exceptionHappened = false;
         try {
-            TaskItem testItem = new TaskItem("2000-03-04", "", "testDescription");
+            testItem.setEmail("");
         } catch (IllegalArgumentException ex) {
             exceptionHappened = true;
         } finally {
-            assertEquals(true, exceptionHappened);
+            assertTrue(exceptionHappened);
         }
     }
 
     @Test
-    public void creatingTaskItemSucceedsWithValidDueDate() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        assertEquals("2000-03-04", testItem.getDueDate());
+    public void toStringContactItemWorks() {
+        ContactItem testItem = new ContactItem("Elier", "Bermudez", "Phone", "Email");
+        assertEquals("Name: \u200BElier \u200BBermudez\n" + "Phone: \u200BPhone\n" + "Email: \u200BEmail\u200B", testItem + "");
     }
 
-    @Test
-    public void creatingTaskItemSucceedsWithValidTitle() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        assertEquals("testTitle", testItem.getTitle());
-    }
-
-    @Test
-    public void settingTaskItemDueDateFailsWithInvalidDate() {
-        boolean exceptionHappened = false;
-        try {
-            TaskItem testItem = new TaskItem("2000-02-28", "testTitle", "testDescription");
-            testItem.setDueDate("2000-02-30");
-        } catch (IllegalArgumentException ex) {
-            exceptionHappened = true;
-        } finally {
-            assertEquals(true, exceptionHappened);
-        }
-    }
-
-    @Test
-    public void settingTaskItemTitleFailsWithInvalidTitle() {
-        boolean exceptionHappened = false;
-        try {
-            TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-            testItem.setTitle("");
-        } catch (IllegalArgumentException ex) {
-            exceptionHappened = true;
-        } finally {
-            assertEquals(true, exceptionHappened);
-        }
-    }
-
-    @Test
-    public void settingTaskItemDueDateSucceedsWithValidDate() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        testItem.setDueDate("2000-04-10");
-        assertEquals("2000-04-10", testItem.getDueDate());
-    }
-
-    @Test
-    public void settingTaskItemTitleSucceedsWithValidTitle() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        testItem.setTitle("testTitle2");
-        assertEquals("testTitle2", testItem.getTitle());
-    }
-
-    @Test
-    public void settingTaskItemDescriptionSucceeds() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        testItem.setDescription("testDescription2");
-        assertEquals("testDescription2", testItem.getDescription());
-    }
-
-    @Test
-    public void newTaskItemCompletedIsFalse() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        assertFalse(testItem.getCompleted());
-    }
-
-    @Test
-    public void setTaskItemCompletedWorks() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        testItem.setCompleted();
-        assertFalse(!testItem.getCompleted());
-    }
-
-    @Test
-    public void setTaskItemUncompletedWorks() {
-        TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
-        testItem.setUncompleted();
-        assertFalse(testItem.getCompleted());
-    }
-
+    /*
     @Test
     public void toStringTaskItemWorks() {
         TaskItem testItem = new TaskItem("2000-03-04", "testTitle", "testDescription");
@@ -135,4 +149,5 @@ testToString()
         testItem.setCompleted();
         assertEquals("\u200B+ [\u200B2001-01-02] \u200BtestTitle2: \u200BtestDescription2\u200B", testItem + "");
     }
+    */
 }

@@ -1,86 +1,102 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-
 public class ContactItem {
     //All of this is imported over from TaskItem for now
+    /*
+    A contact item shall contain a first name
+A contact item shall contain a last name
+A contact item shall contain a phone number
+A contact item shall contain an email address
+A contact item shall contain at least one of [first name], [last name], [phone number], or [email address]
+     */
     // Use Ctrl + Shift + F10 to run your code. Remember to use Fn on your laptop to make F10 work properly.
     // Use Ctrl + Alt + L to format your code.
-    /*  https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html  */
-    private String title;
-    private String description;
-    private LocalDate dueDate;
-    private Boolean completed;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String email;
 
-    public TaskItem() {
-        this.completed = false;
+    public ContactItem() {
     } //Empty Constructor
 
-    public TaskItem(String inputDueDate, String inputTitle, String inputDescription) {
-        setDueDate(inputDueDate);
-        setTitle(inputTitle);
-        setDescription(inputDescription);
-        this.completed = false;
-    }
-
-    public void setCompleted() {
-        this.completed = true;
-    }
-
-    public void setUncompleted() {
-        this.completed = false;
-    }
-
-    public void setDueDate(String inputDueDate) {
-        //A due date shall be in the format of YYYY-MM-DD
-        try {
-            this.dueDate = LocalDate.parse(inputDueDate);
-        } catch (DateTimeParseException ex) {
-            throw new IllegalArgumentException("Due dates should be in YYYY-MM-DD format");
+    public ContactItem(String inputFirstName, String inputLastName, String inputPhoneNumber, String inputEmail) {
+        if((inputFirstName+inputLastName+inputPhoneNumber+inputEmail).length()!=0) {
+            setFirstName(inputFirstName);
+            setLastName(inputLastName);
+            setPhoneNumber(inputPhoneNumber);
+            setEmail(inputEmail);
+        }
+        else{
+            throw new IllegalArgumentException("A contact must have at least a first name, last name, phone number, or email.");
         }
     }
 
-    public void setTitle(String inputTitle) {
-        //A title shall be 1 or more characters in length
-        if (inputTitle.length() > 0) {
-            this.title = inputTitle;
-        } else {
-            throw new IllegalArgumentException("Titles should be 1 or more characters in length");
+    public void setFirstName(String inputFirstName) {
+        if((inputFirstName+this.lastName+this.phoneNumber+this.email).length()!=0){
+            this.firstName = inputFirstName;
+        }
+        else{
+            throw new IllegalArgumentException("Changing this would make all fields blank. Contacts " +
+                    "must have at least a first name, last name, phone number, or email.");
         }
     }
 
-    public void setDescription(String inputDescription) {
-        //A description shall be 0 or more characters in length
-        this.description = inputDescription;
+    public void setLastName(String inputLastName) {
+        if((this.firstName+inputLastName+this.phoneNumber+this.email).length()!=0) {
+            this.lastName = inputLastName;
+        }
+        else{
+            throw new IllegalArgumentException("Changing this would make all fields blank. Contacts " +
+                    "must have at least a first name, last name, phone number, or email.");
+        }
     }
 
-    public String getDueDate() {
-        return this.dueDate.toString();
+    public void setPhoneNumber(String inputPhoneNumber) {
+        if((this.firstName+this.lastName+inputPhoneNumber+this.email).length()!=0){
+        this.phoneNumber = inputPhoneNumber;
+        }
+        else{
+            throw new IllegalArgumentException("Changing this would make all fields blank. Contacts " +
+                    "must have at least a first name, last name, phone number, or email.");
+        }
     }
 
-    public String getTitle() {
-        return this.title;
+    public void setEmail(String inputEmail) {
+        if((this.firstName+this.lastName+this.phoneNumber+inputEmail).length()!=0) {
+            this.email = inputEmail;
+        }
+        else{
+            throw new IllegalArgumentException("Changing this would make all fields blank. Contacts " +
+                    "must have at least a first name, last name, phone number, or email.");
+        }
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public Boolean getCompleted() {
-        return this.completed;
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
     @Override
     public String toString() {
-        String TaskItemString = "";
-        //+ represents completed, - represents uncompleted
-        //separator is a zero-width-space. Essentialy an invisible space. Useful as a bookmark for where variables are.
+        /* Format for how output should be is roughly this:
+        Name: John Doe
+        Phone: 555-123-1234
+        Email: unknown@cia.gov
+         */
+        String ContactItemString = "";
+        //separator is a zero-width-space. Essentially an invisible space. Useful as a bookmark for where variables are.
         String separator = "\u200b";
-        if (getCompleted()) {
-            TaskItemString += (separator + "+ ");
-        } else {
-            TaskItemString += (separator + "- ");
-        }
-        TaskItemString += "[" + separator + getDueDate() + "]" + " " + separator + getTitle() + ": " + separator + getDescription() + separator;
-        return TaskItemString;
+        ContactItemString += "Name: " + separator + getFirstName() + " " + separator + getLastName() +
+                "\nPhone: " + separator + getPhoneNumber() + "\nEmail: " + separator + getEmail() +separator;
+        return ContactItemString;
     }
 }

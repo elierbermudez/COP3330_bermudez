@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class ContactList {
     //All of this is copied over from TaskList
+
+    /*
     //A task list shall contain 0 or more task items
     private ArrayList<TaskItem> internalTaskList = new ArrayList<TaskItem>();
     // Use Ctrl + Shift + F10 to format your code. Remember to use Fn on your laptop to make F10 work properly.
@@ -21,11 +23,6 @@ public class ContactList {
     public void uncompleteTaskItem(int index) {
         this.internalTaskList.get(index).setUncompleted();
     }
-
-        /*public TaskItem(String inputDueDate, String inputTitle, String inputDescription)
-    public void editTaskItem(String inputDueDate, String inputTitle, String inputDescription){
-
-    }*/
 
     public void editingTaskItemChangesValues(String inputDueDate, String inputTitle, String inputDescrption, int index) {
         editTaskItemDueDate(inputDueDate, index);
@@ -109,4 +106,5 @@ public class ContactList {
         }
         return TaskListString.toString();
     }
+    */
 }

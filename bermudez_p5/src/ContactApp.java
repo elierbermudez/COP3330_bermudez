@@ -13,12 +13,6 @@ public class ContactApp {
     Extra Functions:
 A contact list shall contain 1 or more contact items
 
-A contact item shall contain a first name
-A contact item shall contain a last name
-A contact item shall contain a phone number
-A contact item shall contain an email address
-A contact item shall contain at least one of [first name], [last name], [phone number], or [email address]
-
 A user shall be able to create a new contact list
 A user shall be able to load an existing contact list
 A user shall be able to view the current contact list
