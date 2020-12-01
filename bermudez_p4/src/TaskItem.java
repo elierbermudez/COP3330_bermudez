@@ -2,7 +2,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class TaskItem {
-    // Use Ctrl + Shift + F10 to format your code. Remember to use Fn on your laptop to make F10 work properly.
+    // Use Ctrl + Shift + F10 to run your code. Remember to use Fn on your laptop to make F10 work properly.
+    // Use Ctrl + Alt + L to format your code.
     /*  https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html  */
     private String title;
     private String description;
