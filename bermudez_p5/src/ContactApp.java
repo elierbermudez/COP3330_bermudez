@@ -30,10 +30,7 @@ public class ContactApp {
                     openContactListMenu(appContactList);
                 }
                 case 2 -> openContactLoadMenu();
-                case 3 -> {
-                    System.out.println("Goodbye");
-                    App.openApplicationMainMenu();
-                }
+                case 3 -> App.openApplicationMainMenu();
                 default -> System.out.println("I'm not sure I understood that. Please enter the number 1, 2, or 3\n");
             }
         }
@@ -99,9 +96,7 @@ public class ContactApp {
         //Reads in Email
         String email = fileInput.nextLine();
 
-        ContactItem tempItem = new ContactItem(firstName, lastName, phone, email);
-
-        return tempItem;
+        return new ContactItem(firstName, lastName, phone, email);
     }
 
     private static void openContactListMenu(ContactList appContactList) {
@@ -242,7 +237,7 @@ public class ContactApp {
         } else {
             System.out.println("Enter the filename to save as (must end in .txt and not be empty): ");
             String outputFileName = scan.nextLine();
-            if (outputFileName.substring(outputFileName.length() - 4, outputFileName.length()).equals(".txt")) {
+            if (outputFileName.startsWith(".txt", outputFileName.length() - 4)) {
                 if (outputFileName.length() > 4) {
                     try (Formatter output = new Formatter(outputFileName)) {
                         output.format(appContactList + "");

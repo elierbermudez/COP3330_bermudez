@@ -1,12 +1,4 @@
 import java.util.Scanner;
-import java.io.FileNotFoundException;
-import java.lang.SecurityException;
-import java.util.Formatter;
-import java.util.FormatterClosedException;
-import java.util.NoSuchElementException;
-import java.io.IOException;
-import java.lang.IllegalStateException;
-import java.nio.file.Paths;
 
 public class App {
     private static Scanner scanOutside;

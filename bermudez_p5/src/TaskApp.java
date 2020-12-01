@@ -29,13 +29,8 @@ public class TaskApp {
                     TaskList appTaskList = new TaskList();
                     openTaskListMenu(appTaskList);
                 }
-                case 2 -> {
-                    openTaskLoadMenu();
-                }
-                case 3 -> {
-                    System.out.println("Goodbye");
-                    App.openApplicationMainMenu();
-                }
+                case 2 -> openTaskLoadMenu();
+                case 3 -> App.openApplicationMainMenu();
                 default -> System.out.println("I'm not sure I understood that. Please enter the number 1, 2, or 3\n");
             }
         }
@@ -109,30 +104,14 @@ public class TaskApp {
             scan.nextLine();
 
             switch (response) {
-                case 1 -> {
-                    viewTaskList(appTaskList);
-                }
-                case 2 -> {
-                    addATask(appTaskList);
-                }
-                case 3 -> {
-                    editATask(appTaskList);
-                }
-                case 4 -> {
-                    removeATask(appTaskList);
-                }
-                case 5 -> {
-                    markATaskComplete(appTaskList);
-                }
-                case 6 -> {
-                    markATaskIncomplete(appTaskList);
-                }
-                case 7 -> {
-                    SaveCurrentTaskList(appTaskList);
-                }
-                case 8 -> {
-                    openTaskMainMenu();
-                }
+                case 1 -> viewTaskList(appTaskList);
+                case 2 -> addATask(appTaskList);
+                case 3 -> editATask(appTaskList);
+                case 4 -> removeATask(appTaskList);
+                case 5 -> markATaskComplete(appTaskList);
+                case 6 -> markATaskIncomplete(appTaskList);
+                case 7 -> SaveCurrentTaskList(appTaskList);
+                case 8 -> openTaskMainMenu();
                 default -> System.out.println("I'm not sure I understood that. Please enter a number from 1-8\n");
             }
         }
@@ -299,7 +278,7 @@ public class TaskApp {
         } else {
             System.out.println("Enter the filename to save as (must end in .txt and not be empty): ");
             String outputFileName = scan.nextLine();
-            if (outputFileName.substring(outputFileName.length() - 4, outputFileName.length()).equals(".txt")) {
+            if (outputFileName.startsWith(".txt", outputFileName.length() - 4)) {
                 if (outputFileName.length() > 4) {
                     try (Formatter output = new Formatter(outputFileName)) {
                         output.format(appTaskList + "");
